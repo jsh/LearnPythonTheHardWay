@@ -40,12 +40,15 @@ class Scene(object):
         pass
 
 class Death(Scene):
-    """docstring for Death."""
+    """"""
     def enter(self):
         pass
 
 class CentralCorridor(Scene):
-    """docstring for CentralCorridor"""
+    """
+    This is the starting point and has a Gothon already standing there
+    they have to defeat with a joke before continuing.
+    """
     def enter(self):
         pass
 
