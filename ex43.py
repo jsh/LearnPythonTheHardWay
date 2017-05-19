@@ -13,7 +13,7 @@
 #   * Escape Pod
 
 class Map(object):
-    """docstring for Map."""
+    """The map of all the rooms."""
     def __init__(self, start_scene):
         pass
 
@@ -24,15 +24,28 @@ class Map(object):
         pass
 
 class Engine(object):
-    """docstring for Engine."""
+    """The cental loop that runs the game"""
+
     def __init__(self, scene_map):
+        description = """
+        Aliens have invaded a space ship
+        and our hero has to go through a maze of rooms defeating them
+        so he can escape into an escape pod to the planet below.
+        The game will be more like a Zork or Adventure type game
+        with text outputs and funny ways to die.
+        The game will involve an engine that runs a map full of rooms or scenes.
+        Each room will print its own description when the player enters it
+        and then tell the engine what room to run next out of the map.
+        """
+
         pass
 
     def play(self):
         pass
 
 class Scene(object):
-    """docstring for Scene."""
+    """Parent class for individual rooms."""
+
     def __init__(self):
         pass
 
@@ -40,30 +53,42 @@ class Scene(object):
         pass
 
 class Death(Scene):
-    """"""
+    """This is when the player dies and should be something funny."""
+
     def enter(self):
         pass
 
 class CentralCorridor(Scene):
     """
-    This is the starting point and has a Gothon already standing there
+    This is the starting point.
+
+    It has a Gothon already standing there
     they have to defeat with a joke before continuing.
     """
+
     def enter(self):
         pass
 
 class LaserWeaponArmory(Scene):
-    """docstring for LaserWeaponArmory"""
+    """
+    This is where the hero gets a neutron bomb
+
+    Use the bomb to blow up the ship before getting to the escape pod.
+    It has a keypad the hero has to guess the number for.
+    """
+
     def enter(self):
         pass
 
 class TheBridge(Scene):
-    """docstring for Bridge"""
+    """Another battle scene with a Gothon where the hero places the bomb."""
+
     def enter(self):
         pass
 
 class EscapePod(Scene):
-    """docstring for EscapePod"""
+    """Where the hero escapes but only after guessing the right escape pod."""
+
     def enter(self):
         pass
 
