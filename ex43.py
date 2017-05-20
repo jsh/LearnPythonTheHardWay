@@ -12,6 +12,8 @@
 #   * The Bridge
 #   * Escape Pod
 
+from sys import exit
+
 class Map(object):
     """The map of all the rooms."""
     def __init__(self, start_scene):
@@ -55,8 +57,12 @@ class Scene(object):
 class Death(Scene):
     """This is when the player dies and should be something funny."""
 
+    def __init__(self, why):
+        self.why = why
+
     def enter(self):
-        pass
+        print self.why, "You die. Good job!"
+        exit(0)
 
 class CentralCorridor(Scene):
     """
@@ -67,7 +73,24 @@ class CentralCorridor(Scene):
     """
 
     def enter(self):
-        pass
+        print """
+        The Gothons have invaded your ship.
+        You are standing in the Central Corridor.
+        There is a Gothon in front of you.
+        He says, 'Tell me a joke.'
+        """
+
+        joke = raw_input('> ')
+
+        if len(joke) < 5:
+            print "He says, 'That was pathetic.' "
+            death = Death("He throws a giant, rotten tomato at you.")
+            death.enter()
+        else:
+            print "He chuckles. He laughs. He chokes on his own spit and dies."
+            print "Behind where he was standing, a door says 'Armory.'"
+            print "You go through the door."
+            return 'laser_weapon_armory'
 
 class LaserWeaponArmory(Scene):
     """
