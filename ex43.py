@@ -13,9 +13,11 @@
 #   * Escape Pod
 
 from sys import exit
+from random import randint
 
 class Map(object):
     """The map of all the rooms."""
+    
     def __init__(self, start_scene):
         pass
 
@@ -101,19 +103,75 @@ class LaserWeaponArmory(Scene):
     """
 
     def enter(self):
-        pass
+        print "There is a neutron bomb here, locked to the wall."
+        print "The sign above it says, 'Enter digit to remove.'"
+        print "There is a keypad on it."
+
+        n = randint(0,10)
+        resp = int(raw_input('> '))
+        if n == resp:
+            print "You hear an audible click, and the lock opens."
+            print "An alarm sounds."
+            print "You take the bomb and walk to the door marked 'Bridge'"
+            return 'the_bridge'
+        else:
+            print "The sign clears, then prints, 'Wrong-o.'"
+            print "The bomb explodes."
+            death = Death("The ship, the Gothons, and you are blown to pieces.")
+            death.enter()
 
 class TheBridge(Scene):
     """Another battle scene with a Gothon where the hero places the bomb."""
 
+    def __init__():
+            rock_paper_scissors = ['rock', 'paper', 'scissors']
+
     def enter(self):
-        pass
+        print "You enter the Bridge."
+        print "Another Gothon has heard the alarm, and rushes into the bridge."
+        print "He is heavily armed."
+        print "You say, 'Rock, Paper, Scissors?'"
+
+        while True:
+            you = randint(0, 4)
+            gothon = randint(0, 4)
+            print "You show: ", rock_paper_scissors[you]
+            print "He shows: ", rock_paper_scissors[gothon]
+            if you == (gothon + 1) % 4:
+                print "The Gothon loses."
+                print "He shrieks and disappears in a puff of smoke."
+                print "You head for the door marked 'Escape pod.'"
+                return 'escape_pod'
+            elif gothon == (you + 1) % 4:
+                print "You lose."
+                death = Death("You shriek and disappear in a puff of smoke.")
+                death.enter()
+            else:
+                print "Rats. Go again."
 
 class EscapePod(Scene):
     """Where the hero escapes but only after guessing the right escape pod."""
 
     def enter(self):
-        pass
+        print "You enter the room and see two escape pods."
+        print "A sign overhead flashes, 'Escape pod needs refueling.'"
+        print "The lights for the arrows underneath, indicating pod ",
+            "are burnt out."
+        print "The five minute warning for the bomb begins beeping."
+        print "You quickly choose the left pod, jump in ",
+                "and press the button marked, 'Go' ."
+        print "The pod launches, you rush into space."
+
+        if randint(0, 2) == 0:
+            print "You speed away. Five minutes later, the bomb explodes."
+            print "The spaceship and Gothons are destroyed."
+            print "You head to the planet below."
+            return 'you_win'
+        else:
+            print "The pod sputters to a halt, feet outside the exit."
+            print "No fuel. No way back."
+            death = Death("Four-and-a-half minutes later, the bomb explodes.")
+            death.enter()
 
 a_map = Map('central_corridor')
 a_game = Engine(a_map)
