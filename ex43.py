@@ -17,7 +17,7 @@ from random import randint
 
 class Map(object):
     """The map of all the rooms."""
-    
+
     def __init__(self, start_scene):
         pass
 
@@ -31,7 +31,7 @@ class Engine(object):
     """The cental loop that runs the game"""
 
     def __init__(self, scene_map):
-        description = """
+        self.description = """
         Aliens have invaded a space ship
         and our hero has to go through a maze of rooms defeating them
         so he can escape into an escape pod to the planet below.
@@ -63,7 +63,7 @@ class Death(Scene):
         self.why = why
 
     def enter(self):
-        print self.why, "You die. Good job!"
+        print "\n", self.why, "You die. Good job!"
         exit(0)
 
 class CentralCorridor(Scene):
@@ -105,10 +105,11 @@ class LaserWeaponArmory(Scene):
     def enter(self):
         print "There is a neutron bomb here, locked to the wall."
         print "The sign above it says, 'Enter digit to remove.'"
-        print "There is a keypad on it."
+        print "There is a keypad on it with the numbers 0-9."
 
-        n = randint(0,10)
+        n = randint(0,9)
         resp = int(raw_input('> '))
+        print "you type %d, the lock wanted %d" % (resp, n)
         if n == resp:
             print "You hear an audible click, and the lock opens."
             print "An alarm sounds."
@@ -123,26 +124,28 @@ class LaserWeaponArmory(Scene):
 class TheBridge(Scene):
     """Another battle scene with a Gothon where the hero places the bomb."""
 
-    def __init__():
-            rock_paper_scissors = ['rock', 'paper', 'scissors']
+    def __init__(self):
+            self.rock_paper_scissors = ['rock', 'paper', 'scissors']
 
     def enter(self):
         print "You enter the Bridge."
         print "Another Gothon has heard the alarm, and rushes into the bridge."
         print "He is heavily armed."
         print "You say, 'Rock, Paper, Scissors?'"
+        print "The Gothon says, 'Sure!'"
 
         while True:
-            you = randint(0, 4)
-            gothon = randint(0, 4)
-            print "You show: ", rock_paper_scissors[you]
-            print "He shows: ", rock_paper_scissors[gothon]
-            if you == (gothon + 1) % 4:
+            raw_input('Press "enter" to play.')
+            you = randint(0, 2)
+            gothon = randint(0, 2)
+            print "You show: ", self.rock_paper_scissors[you]
+            print "He shows: ", self.rock_paper_scissors[gothon]
+            if you == (gothon + 1) % 3:
                 print "The Gothon loses."
                 print "He shrieks and disappears in a puff of smoke."
                 print "You head for the door marked 'Escape pod.'"
                 return 'escape_pod'
-            elif gothon == (you + 1) % 4:
+            elif gothon == (you + 1) % 3:
                 print "You lose."
                 death = Death("You shriek and disappear in a puff of smoke.")
                 death.enter()
@@ -155,14 +158,23 @@ class EscapePod(Scene):
     def enter(self):
         print "You enter the room and see two escape pods."
         print "A sign overhead flashes, 'Escape pod needs refueling.'"
-        print "The lights for the arrows underneath, indicating pod ",
-            "are burnt out."
+        print ("The lights for the arrows underneath, "
+                "to show which pod needs fuel, "
+                "are burnt out.")
         print "The five minute warning for the bomb begins beeping."
-        print "You quickly choose the left pod, jump in ",
-                "and press the button marked, 'Go' ."
+        while True:
+            pod = raw_input("Do you choose the right pod or the left? ")
+            if pod == 'right' or pod == 'left':
+                break
+            else:
+                print "Please type 'right' or 'left.' Time is short."
+
+        action = "You guess, jump into the %s pod, " % pod
+        action += "and press the button marked 'Go.'"
+        print action
         print "The pod launches, you rush into space."
 
-        if randint(0, 2) == 0:
+        if randint(0, 1) == 0:
             print "You speed away. Five minutes later, the bomb explodes."
             print "The spaceship and Gothons are destroyed."
             print "You head to the planet below."
